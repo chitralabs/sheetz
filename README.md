@@ -7,6 +7,8 @@
 
 **High-performance Excel and CSV processing for Java** — Read and write spreadsheets with one line of code.
 
+**See it in action:** Check out the [sheetz-examples](https://github.com/chitralabs/sheetz-examples) repo for 8 runnable demos covering every feature.
+
 ## Features
 
 - 🚀 **One-liner API** — No boilerplate, just `Sheetz.read()` and `Sheetz.write()`
