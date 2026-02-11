@@ -1,0 +1,26 @@
+# EditorConfig — https://editorconfig.org
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{yml,yaml}]
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false
+
+[*.xml]
+indent_size = 4
+
+[{pom.xml,*.pom}]
+indent_size = 4
+
+[*.properties]
+charset = latin1

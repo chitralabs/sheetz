@@ -1,0 +1,35 @@
+# Build output
+target/
+
+# IDE files
+.idea/
+*.iml
+*.iws
+*.ipr
+.project
+.classpath
+.settings/
+.vscode/
+*.swp
+*.swo
+*~
+.factorypath
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Maven
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+
+# Logs
+*.log
+
+# Claude config
+.claude/
