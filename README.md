@@ -9,6 +9,8 @@
 
 **See it in action:** Check out the [sheetz-examples](https://github.com/chitralabs/sheetz-examples) repo for 8 runnable demos covering every feature.
 
+**How does it compare?** See [sheetz-benchmarks](https://github.com/chitralabs/sheetz-benchmarks) for side-by-side code and JMH performance comparisons against Apache POI, EasyExcel, FastExcel, and Poiji.
+
 ## Features
 
 - 🚀 **One-liner API** — No boilerplate, just `Sheetz.read()` and `Sheetz.write()`
