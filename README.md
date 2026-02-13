@@ -128,6 +128,27 @@ List<Product> products = Sheetz.read("products.csv", Product.class);
 
 That's it. No configuration required.
 
+### Spring Boot
+
+Using Spring Boot? Add the [starter](https://github.com/chitralabs/sheetz-spring-boot-starter) for auto-configured injection:
+
+```xml
+<dependency>
+    <groupId>io.github.chitralabs.sheetz</groupId>
+    <artifactId>sheetz-spring-boot-starter</artifactId>
+    <version>1.0.1</version>
+</dependency>
+```
+
+```java
+@Autowired
+private SheetzTemplate sheetz;
+
+List<Product> products = sheetz.read("products.xlsx", Product.class);
+```
+
+Configure via `application.properties` — see the [starter docs](https://github.com/chitralabs/sheetz-spring-boot-starter) for all options.
+
 ---
 
 ## Usage Guide
@@ -412,7 +433,7 @@ Convert between XLSX, XLS, and CSV formats: `Sheetz.write(Sheetz.read("data.xlsx
 Validate spreadsheet data before import. Get per-row error details with column names, invalid values, and root causes.
 
 **Spring Boot APIs**
-Build upload/download endpoints for Excel files. Sheetz is thread-safe and works directly with `InputStream`/`OutputStream`.
+Build upload/download endpoints for Excel files. Use the [Spring Boot starter](https://github.com/chitralabs/sheetz-spring-boot-starter) for auto-configured `SheetzTemplate` injection with externalized configuration.
 
 ---
 
@@ -441,7 +462,7 @@ mvn compile exec:java -Dexec.mainClass="io.github.chitralabs.sheetz.examples.E01
 
 ## Roadmap
 
-- [ ] `sheetz-spring-boot-starter` — Auto-configuration for Spring Boot with `@EnableSheetz`
+- [x] [`sheetz-spring-boot-starter`](https://github.com/chitralabs/sheetz-spring-boot-starter) — Auto-configuration for Spring Boot (**released!**)
 - [ ] Google Sheets API integration — Read/write directly from Google Sheets
 - [ ] Excel formula support in write operations
 - [ ] Template-based writing — Fill data into existing Excel templates
