@@ -1,15 +1,24 @@
-# Sheetz — Excel & CSV Processing for Java, Simplified
+<div align="center">
+
+# Sheetz
+
+### Excel & CSV Processing for Java, Simplified
 
 [![Build](https://github.com/chitralabs/sheetz/actions/workflows/ci.yml/badge.svg)](https://github.com/chitralabs/sheetz/actions/workflows/ci.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.chitralabs.sheetz/sheetz-core)](https://central.sonatype.com/artifact/io.github.chitralabs.sheetz/sheetz-core)
 [![Java 11+](https://img.shields.io/badge/Java-11%2B-blue.svg)](https://openjdk.java.net/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/chitralabs/sheetz?style=social)](https://github.com/chitralabs/sheetz/stargazers)
-[![GitHub issues](https://img.shields.io/github/issues/chitralabs/sheetz)](https://github.com/chitralabs/sheetz/issues)
+[![javadoc](https://javadoc.io/badge2/io.github.chitralabs.sheetz/sheetz-core/javadoc.svg)](https://javadoc.io/doc/io.github.chitralabs.sheetz/sheetz-core)
 
 **Read and write Excel (.xlsx, .xls) and CSV files in Java with one line of code.**
 
-Sheetz replaces hundreds of lines of Apache POI boilerplate with a clean, annotation-based API. Stream million-row files with constant memory. Validate data with row-level error reports. Ship your spreadsheet feature in minutes, not days.
+Sheetz replaces hundreds of lines of Apache POI boilerplate with a clean, annotation-based API.<br/>
+Stream million-row files with constant memory. Validate data with row-level error reports.<br/>
+Ship your spreadsheet feature in minutes, not days.
+
+[Quick Start](#quick-start) &bull; [Examples](https://github.com/chitralabs/sheetz-examples) &bull; [Benchmarks](https://github.com/chitralabs/sheetz-benchmarks) &bull; [Spring Boot Starter](https://github.com/chitralabs/sheetz-spring-boot-starter) &bull; [Javadoc](https://javadoc.io/doc/io.github.chitralabs.sheetz/sheetz-core)
+
+</div>
 
 ```java
 // Read an Excel file into Java objects — that's it
@@ -18,8 +27,6 @@ List<Product> products = Sheetz.read("products.xlsx", Product.class);
 // Write Java objects to Excel — that's it
 Sheetz.write(products, "products.xlsx");
 ```
-
-> **New to Sheetz?** Jump to [Quick Start](#quick-start) or browse [8 runnable examples](https://github.com/chitralabs/sheetz-examples).
 
 ---
 
@@ -480,6 +487,17 @@ Have an idea? [Open an issue](https://github.com/chitralabs/sheetz/issues) — c
 
 ---
 
+## Ecosystem
+
+| Project | Description |
+|---------|-------------|
+| [**sheetz**](https://github.com/chitralabs/sheetz) | Core library — read, write, stream, validate Excel & CSV |
+| [**sheetz-spring-boot-starter**](https://github.com/chitralabs/sheetz-spring-boot-starter) | Spring Boot auto-configuration with `SheetzTemplate` |
+| [**sheetz-examples**](https://github.com/chitralabs/sheetz-examples) | 8 runnable examples covering every feature |
+| [**sheetz-benchmarks**](https://github.com/chitralabs/sheetz-benchmarks) | JMH benchmarks vs Apache POI, EasyExcel, FastExcel, Poiji |
+
+---
+
 ## Building from Source
 
 ```bash
@@ -508,6 +526,11 @@ See [CHANGELOG.md](CHANGELOG.md) for release history.
 
 ---
 
-If Sheetz saved you time or simplified your codebase, consider giving it a star. It helps other developers find this project and motivates continued development.
+<div align="center">
+
+If Sheetz saved you time or simplified your codebase, consider giving it a star.<br/>
+It helps other developers find this project and motivates continued development.
 
 [![Star this repo](https://img.shields.io/github/stars/chitralabs/sheetz?style=social)](https://github.com/chitralabs/sheetz)
+
+</div>
