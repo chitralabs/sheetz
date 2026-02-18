@@ -1,0 +1,73 @@
+name: Bug Report
+description: Report a bug in Sheetz
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please fill out the sections below so we can reproduce and fix the issue quickly.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug
+      description: A clear description of what the bug is.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Minimal code snippet or steps to reproduce the issue.
+      placeholder: |
+        ```java
+        List<MyModel> data = Sheetz.read("file.xlsx", MyModel.class);
+        // Expected: ...
+        // Actual: ...
+        ```
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What you expected to happen.
+    validations:
+      required: true
+
+  - type: input
+    id: sheetz-version
+    attributes:
+      label: Sheetz version
+      placeholder: e.g. 1.0.1
+    validations:
+      required: true
+
+  - type: input
+    id: java-version
+    attributes:
+      label: Java version
+      placeholder: e.g. Java 17.0.9 (Temurin)
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: OS
+      placeholder: e.g. macOS 14.2, Ubuntu 22.04, Windows 11
+
+  - type: textarea
+    id: stacktrace
+    attributes:
+      label: Stack trace / error output
+      description: Paste the full stack trace if applicable.
+      render: text
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Any other context — sample file, workaround, etc.
