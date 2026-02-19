@@ -47,13 +47,13 @@ Apache POI requires **45+ lines** to do what Sheetz does in **1**. Here's the pr
 <dependency>
     <groupId>io.github.chitralabs.sheetz</groupId>
     <artifactId>sheetz-core</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 </dependency>
 ```
 
 **Gradle:**
 ```groovy
-implementation 'io.github.chitralabs.sheetz:sheetz-core:1.0.1'
+implementation 'io.github.chitralabs.sheetz:sheetz-core:1.0.2'
 ```
 
 ### Define your model
