@@ -14,6 +14,26 @@ Sheetz follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.0.2] — 2026-02-19
+
+### Fixed
+- Fix Windows file locking issue in `StreamingReader.close()` — parser thread now joins before returning, ensuring file handles are fully released before temp directory cleanup
+- Upgraded OpenCSV from 5.9 to 5.12.0
+- Upgraded AssertJ from 3.24.2 to 3.27.7
+
+### Changed
+- Moved OWASP dependency-check to a separate weekly security scan workflow for faster CI
+- Upgraded maven-gpg-plugin from 3.1.0 to 3.2.8
+- Upgraded maven-javadoc-plugin from 3.6.3 to 3.12.0
+- Upgraded maven-surefire-plugin from 3.2.2 to 3.5.4
+- Upgraded maven-jar-plugin from 3.3.0 to 3.5.0
+- Upgraded maven-source-plugin from 3.3.0 to 3.4.0
+- Upgraded maven-compiler-plugin from 3.11.0 to 3.15.0
+- Upgraded SLF4J from 2.0.9 to 2.0.17
+- Upgraded GitHub Actions (checkout v6, setup-java v5, upload-artifact v6, codecov v5)
+
+---
+
 ## [1.0.1] — 2026-02-13
 
 ### Fixed
@@ -51,6 +71,7 @@ Sheetz follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
-[Unreleased]: https://github.com/chitralabs/sheetz/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/chitralabs/sheetz/compare/v1.0.2...HEAD
+[1.0.2]: https://github.com/chitralabs/sheetz/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/chitralabs/sheetz/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/chitralabs/sheetz/releases/tag/v1.0.0
