@@ -16,6 +16,9 @@ updates:
       # Only patch updates for Apache POI to avoid breaking changes
       - dependency-name: "org.apache.poi:*"
         update-types: ["version-update:semver-major", "version-update:semver-minor"]
+      # JUnit 6+ requires Java 17+, we support Java 11
+      - dependency-name: "org.junit.jupiter:*"
+        update-types: ["version-update:semver-major"]
 
   # Keep GitHub Actions up to date
   - package-ecosystem: "github-actions"
