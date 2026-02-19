@@ -117,6 +117,11 @@ public final class StreamingReader<T> implements Iterable<T>, AutoCloseable {
             if (pt != null && pt.isAlive()) {
                 log.debug("Interrupting parser thread for early close");
                 pt.interrupt();
+                try {
+                    pt.join(5000);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
             }
         }
     }
