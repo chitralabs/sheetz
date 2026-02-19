@@ -1,8 +1,11 @@
-blank_issues_enabled: true
+blank_issues_enabled: false
 contact_links:
-  - name: Questions & Discussions
-    url: https://github.com/chitralabs/sheetz/discussions
-    about: Ask questions or start a discussion about Sheetz
-  - name: Examples
+  - name: 💬 Ask a Question (GitHub Discussions)
+    url: https://github.com/chitralabs/sheetz/discussions/new?category=q-a
+    about: For usage questions, please use Discussions — Issues are for bugs and feature requests.
+  - name: 📖 Check the Examples First
     url: https://github.com/chitralabs/sheetz-examples
-    about: Browse 8 runnable examples covering every Sheetz feature
+    about: See if your use case is already covered by the 8 runnable examples.
+  - name: 📊 Benchmark Questions
+    url: https://github.com/chitralabs/sheetz-benchmarks
+    about: For performance questions, see the JMH benchmark comparisons.

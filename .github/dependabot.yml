@@ -1,0 +1,30 @@
+version: 2
+updates:
+  # Keep Maven dependencies up to date
+  - package-ecosystem: "maven"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "automated"
+    commit-message:
+      prefix: "chore(deps)"
+    ignore:
+      # Only patch updates for Apache POI to avoid breaking changes
+      - dependency-name: "org.apache.poi:*"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
+
+  # Keep GitHub Actions up to date
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    labels:
+      - "dependencies"
+      - "automated"
+    commit-message:
+      prefix: "ci(deps)"
