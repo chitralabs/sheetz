@@ -59,7 +59,7 @@
         <!-- Dependency versions -->
         <poi.version>5.2.5</poi.version>
         <opencsv.version>5.9</opencsv.version>
-        <slf4j.version>2.0.9</slf4j.version>
+        <slf4j.version>2.0.17</slf4j.version>
 
         <!-- Test dependency versions -->
         <junit.version>5.10.1</junit.version>
