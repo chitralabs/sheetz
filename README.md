@@ -3,6 +3,7 @@
 [![Build](https://github.com/chitralabs/sheetz/actions/workflows/ci.yml/badge.svg)](https://github.com/chitralabs/sheetz/actions/workflows/ci.yml)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.chitralabs.sheetz/sheetz-core)](https://central.sonatype.com/artifact/io.github.chitralabs.sheetz/sheetz-core)
 [![Java 11+](https://img.shields.io/badge/Java-11%2B-blue.svg)](https://openjdk.java.net/)
+[![codecov](https://codecov.io/gh/chitralabs/sheetz/branch/main/graph/badge.svg)](https://codecov.io/gh/chitralabs/sheetz)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/chitralabs/sheetz?style=social)](https://github.com/chitralabs/sheetz/stargazers)
 
