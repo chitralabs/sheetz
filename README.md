@@ -32,7 +32,7 @@ Apache POI requires **45+ lines** to do what Sheetz does in **1**. Here's the pr
 | **Annotation mapping** | ✅ | ❌ | ✅ | ❌ |
 | **Built-in validation** | ✅ | ❌ | ❌ | ❌ |
 | **Auto type conversion** | ✅ 19 types | ❌ | ⚠️ basic | ❌ |
-| **Multi-format (xlsx/xls/csv)** | ✅ | ✅ | ⚠️ xlsx only | ⚠️ xlsx only |
+| **Multi-format (xlsx/xls/csv/ods)** | ✅ | ✅ | ⚠️ xlsx only | ⚠️ xlsx only |
 
 📊 [Full JMH benchmark results & methodology →](https://github.com/chitralabs/sheetz-benchmarks)
 
