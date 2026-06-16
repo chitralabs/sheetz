@@ -4,6 +4,10 @@ import io.github.chitralabs.sheetz.SheetzConfig;
 import io.github.chitralabs.sheetz.cache.FieldMapping;
 import io.github.chitralabs.sheetz.convert.Converter;
 import io.github.chitralabs.sheetz.convert.Converters;
+import io.github.chitralabs.sheetz.style.CellStyleDef;
+import io.github.chitralabs.sheetz.style.HyperlinkValue;
+import io.github.chitralabs.sheetz.style.PoiStyleResolver;
+import org.apache.poi.common.usermodel.HyperlinkType;
 import org.apache.poi.ss.usermodel.*;
 
 import java.time.LocalDate;
@@ -59,6 +63,89 @@ final class ExcelWriteSupport {
             } catch (IllegalAccessException e) {
                 cell.setBlank();
             }
+        }
+    }
+
+    /**
+     * Writes a single data row with per-column styles applied.
+     *
+     * @param obj           the source object
+     * @param row           the POI row to populate
+     * @param fields        ordered list of field mappings
+     * @param dateStyle     cell style for date values
+     * @param styleResolver resolver for annotation-based styles (may be null)
+     */
+    @SuppressWarnings("unchecked")
+    static void writeRow(Object obj, Row row, List<FieldMapping> fields,
+                         CellStyle dateStyle, PoiStyleResolver styleResolver) {
+        int col = 0;
+        for (FieldMapping fm : fields) {
+            Cell cell = row.createCell(col++);
+            try {
+                Object value = fm.getValue(obj);
+                if (value == null) {
+                    cell.setBlank();
+                    continue;
+                }
+
+                // Handle HyperlinkValue type
+                if (value instanceof HyperlinkValue) {
+                    HyperlinkValue hv = (HyperlinkValue) value;
+                    cell.setCellValue(hv.displayText());
+                    CreationHelper helper = row.getSheet().getWorkbook().getCreationHelper();
+                    Hyperlink link = helper.createHyperlink(HyperlinkType.URL);
+                    link.setAddress(hv.url());
+                    cell.setHyperlink(link);
+                    if (styleResolver != null && fm.hasStyle()) {
+                        CellStyle resolved = styleResolver.resolve(fm.styleDef());
+                        if (resolved != null) cell.setCellStyle(resolved);
+                    }
+                    continue;
+                }
+
+                Object cellValue = value;
+                if (fm.hasCustomConverter()) {
+                    cellValue = ((Converter<Object>) fm.converter()).toCell(value);
+                } else {
+                    Converter<?> conv = Converters.get(value.getClass());
+                    if (conv != null) {
+                        @SuppressWarnings("rawtypes")
+                        Object c = ((Converter) conv).toCell(value);
+                        cellValue = c;
+                    }
+                }
+                setCellValue(cell, cellValue, dateStyle);
+
+                // Apply @Style annotation if present
+                if (styleResolver != null && fm.hasStyle()) {
+                    CellStyleDef styleDef = fm.styleDef();
+                    CellStyle resolved = styleResolver.resolve(styleDef);
+                    if (resolved != null) cell.setCellStyle(resolved);
+                }
+
+                // Handle hyperlink via @Style(hyperlink = true)
+                if (fm.hasStyle() && fm.styleDef().hyperlink() && cellValue instanceof String) {
+                    String url = (String) cellValue;
+                    CreationHelper helper = row.getSheet().getWorkbook().getCreationHelper();
+                    HyperlinkType hlType = parseHyperlinkType(fm.styleDef().hyperlinkType());
+                    Hyperlink link = helper.createHyperlink(hlType);
+                    link.setAddress(url);
+                    cell.setHyperlink(link);
+                }
+            } catch (IllegalAccessException e) {
+                cell.setBlank();
+            }
+        }
+    }
+
+    private static HyperlinkType parseHyperlinkType(String type) {
+        if (type == null || type.isEmpty()) return HyperlinkType.URL;
+        switch (type.toUpperCase()) {
+            case "URL": return HyperlinkType.URL;
+            case "DOCUMENT": return HyperlinkType.DOCUMENT;
+            case "EMAIL": return HyperlinkType.EMAIL;
+            case "FILE": return HyperlinkType.FILE;
+            default: return HyperlinkType.URL;
         }
     }
 

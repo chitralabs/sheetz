@@ -19,33 +19,33 @@ import java.lang.annotation.*;
  * </ul>
  * 
  * <h2>Examples</h2>
- * <pre>{@code
+ * <pre>
  * public class Product {
- *     @Column("Product Name")  // Map to different header
+ *     &#64;Column("Product Name")  // Map to different header
  *     public String name;
- *     
- *     @Column(index = 1)  // Map by column index (0-based)
+ *
+ *     &#64;Column(index = 1)  // Map by column index (0-based)
  *     public Double price;
- *     
- *     @Column(required = true)  // Fail validation if empty
+ *
+ *     &#64;Column(required = true)  // Fail validation if empty
  *     public String sku;
- *     
- *     @Column(defaultValue = "pending")  // Default for empty cells
+ *
+ *     &#64;Column(defaultValue = "pending")  // Default for empty cells
  *     public String status;
- *     
- *     @Column(format = "dd/MM/yyyy")  // Custom date format
+ *
+ *     &#64;Column(format = "dd/MM/yyyy")  // Custom date format
  *     public LocalDate orderDate;
- *     
- *     @Column(converter = MoneyConverter.class)  // Custom converter
+ *
+ *     &#64;Column(converter = MoneyConverter.class)  // Custom converter
  *     public BigDecimal amount;
- *     
- *     @Column(ignore = true)  // Skip this field
+ *
+ *     &#64;Column(ignore = true)  // Skip this field
  *     public String internalId;
- *     
- *     @Column(width = 20)  // Column width in characters
+ *
+ *     &#64;Column(width = 20)  // Column width in characters
  *     public String description;
  * }
- * }</pre>
+ * </pre>
  * 
  * @see Converter
  */

@@ -1,8 +1,11 @@
 package io.github.chitralabs.sheetz.cache;
 
 import io.github.chitralabs.sheetz.annotation.Column;
+import io.github.chitralabs.sheetz.annotation.Style;
 import io.github.chitralabs.sheetz.convert.Converter;
 import io.github.chitralabs.sheetz.exception.SheetzException;
+import io.github.chitralabs.sheetz.style.CellStyleDef;
+import io.github.chitralabs.sheetz.style.StyleAnnotationParser;
 import java.lang.reflect.Field;
 
 /**
@@ -26,12 +29,14 @@ public final class FieldMapping {
     private final String defaultValue;
     private final int width;
     private final Converter<?> converter;
-    
+    private final CellStyleDef styleDef;
+
     private FieldMapping(Field field, String headerName, int columnIndex, String format,
-                         boolean required, String defaultValue, int width, Converter<?> converter) {
+                         boolean required, String defaultValue, int width, Converter<?> converter,
+                         CellStyleDef styleDef) {
         this.field = field; this.headerName = headerName; this.columnIndex = columnIndex;
         this.format = format; this.required = required; this.defaultValue = defaultValue;
-        this.width = width; this.converter = converter;
+        this.width = width; this.converter = converter; this.styleDef = styleDef;
         this.field.setAccessible(true);
     }
     
@@ -40,7 +45,7 @@ public final class FieldMapping {
         String name = field.getName();
         int index = -1; String format = ""; boolean required = false;
         String defaultValue = ""; int width = 0; Converter<?> converter = null;
-        
+
         if (ann != null) {
             name = ann.value().isEmpty() ? field.getName() : ann.value();
             index = ann.index(); format = ann.format(); required = ann.required();
@@ -53,7 +58,8 @@ public final class FieldMapping {
                 }
             }
         }
-        return new FieldMapping(field, name, index, format, required, defaultValue, width, converter);
+        CellStyleDef styleDef = StyleAnnotationParser.parse(field.getAnnotation(Style.class));
+        return new FieldMapping(field, name, index, format, required, defaultValue, width, converter, styleDef);
     }
     
     public Field field() { return field; }
@@ -64,6 +70,8 @@ public final class FieldMapping {
     public String defaultValue() { return defaultValue; }
     public int width() { return width; }
     public Converter<?> converter() { return converter; }
+    public CellStyleDef styleDef() { return styleDef; }
+    public boolean hasStyle() { return styleDef != null; }
     public Class<?> type() { return field.getType(); }
     public boolean hasCustomConverter() { return converter != null; }
     public boolean hasDefaultValue() { return defaultValue != null && !defaultValue.isEmpty(); }

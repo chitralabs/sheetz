@@ -59,20 +59,20 @@
         <!-- Dependency versions -->
         <poi.version>5.2.5</poi.version>
         <opencsv.version>5.12.0</opencsv.version>
-        <slf4j.version>2.0.17</slf4j.version>
+        <slf4j.version>2.0.18</slf4j.version>
 
         <!-- Test dependency versions -->
-        <junit.version>5.10.1</junit.version>
+        <junit.version>5.14.4</junit.version>
         <assertj.version>3.27.7</assertj.version>
 
         <!-- Plugin versions -->
         <maven-compiler-plugin.version>3.15.0</maven-compiler-plugin.version>
-        <maven-surefire-plugin.version>3.5.4</maven-surefire-plugin.version>
+        <maven-surefire-plugin.version>3.5.5</maven-surefire-plugin.version>
         <maven-jar-plugin.version>3.5.0</maven-jar-plugin.version>
         <maven-source-plugin.version>3.4.0</maven-source-plugin.version>
         <maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
         <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
-        <jacoco-plugin.version>0.8.11</jacoco-plugin.version>
+        <jacoco-plugin.version>0.8.14</jacoco-plugin.version>
     </properties>
 
     <dependencies>
@@ -93,6 +93,14 @@
             <groupId>com.opencsv</groupId>
             <artifactId>opencsv</artifactId>
             <version>${opencsv.version}</version>
+        </dependency>
+
+        <!-- ODS (LibreOffice) support — optional -->
+        <dependency>
+            <groupId>org.odftoolkit</groupId>
+            <artifactId>odfdom-java</artifactId>
+            <version>0.12.0</version>
+            <optional>true</optional>
         </dependency>
 
         <!-- Logging -->

@@ -6,26 +6,30 @@ import java.util.Objects;
 public enum Format {
     XLSX("xlsx", true),
     XLS("xls", true),
-    CSV("csv", false);
-    
+    CSV("csv", false),
+    ODS("ods", false);
+
     private final String extension;
     private final boolean excel;
-    
+
     Format(String extension, boolean excel) {
         this.extension = extension;
         this.excel = excel;
     }
-    
+
     public String extension() { return extension; }
     public boolean isExcel() { return excel; }
     public boolean isCsv() { return this == CSV; }
-    
+    public boolean isOds() { return this == ODS; }
+    public boolean isSpreadsheet() { return excel || this == ODS; }
+
     public static Format detect(String filename) {
         Objects.requireNonNull(filename, "Filename cannot be null");
         String lower = filename.toLowerCase().trim();
         if (lower.endsWith(".xlsx")) return XLSX;
         if (lower.endsWith(".xls")) return XLS;
         if (lower.endsWith(".csv") || lower.endsWith(".tsv")) return CSV;
+        if (lower.endsWith(".ods")) return ODS;
         throw new SheetzException("Unsupported format: " + filename);
     }
 }

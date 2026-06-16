@@ -10,7 +10,38 @@ Sheetz follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
 
 ### Added
-- Nothing yet — [see roadmap](ROADMAP.md) for what's coming
+
+- **Cell Formatting API** — New `@Style` annotation for controlling cell visual presentation (fonts, colors, borders, alignment, text wrapping, data formats).
+- **`io.github.chitralabs.sheetz.style` package** with `CellStyleDef` (immutable value object), `CellStyleBuilder` (fluent builder), `StyleAnnotationParser`, and `PoiStyleResolver` (POI style conversion with per-workbook caching).
+- **Hyperlink support** — `HyperlinkValue` type for fields that hold both display text and URL; `@Style(hyperlink = true)` for string fields containing URLs.
+- **Merged cell read support** — `MergedRegionResolver` pre-computes (row, col) to master cell lookup for O(1) merged cell reads in Excel files.
+- **Auto-filter support** — `ExcelWriter.autoFilter(boolean)` and `WriterBuilder.autoFilter(boolean)` to add filter dropdowns on the header row.
+- **Merge region support** — `ExcelWriter.mergeRegion()` and `WriterBuilder.mergeRegion()` for programmatic cell merging during writes.
+- **Custom header styles** — `ExcelWriter.headerStyle(CellStyleDef)` and `WriterBuilder.headerStyle(CellStyleDef)` for overriding the default header style.
+- **ODS (LibreOffice Calc) format support** — Read and write `.ods` files using ODF Toolkit (`org.odftoolkit:odfdom-java:0.12.0`), added as an optional dependency.
+  - `OdsReader` — Reads ODS files with full support for typed reads, readMaps, readRaw, and validation.
+  - `OdsWriter` — Writes ODS files with annotation-based mapping.
+  - `OdsWriteSupport` — Shared ODS cell value writing utilities.
+  - `WorkbookBuilder` — Multi-sheet ODS write support.
+  - `StreamingReader` — ODS fallback to in-memory read (no SAX streaming API for ODS).
+  - Runtime safety: clear `SheetzException` message when ODFDOM library is absent.
+- `Format.ODS` enum value with `isOds()` and `isSpreadsheet()` methods.
+- `Format.detect()` now recognizes `.ods` extension.
+- `HyperlinkValue` converter registered in `Converters` for automatic type handling.
+
+### Changed
+
+- Updated `maven-surefire-plugin` from 3.5.4 to 3.5.5.
+- Updated `jacoco-maven-plugin` from 0.8.11 to 0.8.14.
+- Updated `junit-jupiter` from 5.10.1 to 5.14.4.
+- Updated `slf4j` from 2.0.17 to 2.0.18.
+- Updated `actions/upload-artifact` from v6 to v7 in CI workflow.
+- `ExcelWriteSupport.writeRow()` now accepts an optional `PoiStyleResolver` for per-column style application.
+- `ExcelWriter` and `WorkbookBuilder` now instantiate `PoiStyleResolver` for style-aware writes.
+- `ExcelReader` now resolves merged region values and extracts hyperlinks from cells.
+- `FieldMapping` now parses `@Style` annotations and exposes `styleDef()` and `hasStyle()`.
+- `Sheetz` facade updated with three-way format dispatch (CSV/Excel/ODS) in all read/write/stream/validate methods.
+- `module-info.java` exports `io.github.chitralabs.sheetz.style` package and adds `requires static odfdom.java` and `requires java.desktop`.
 
 ---
 

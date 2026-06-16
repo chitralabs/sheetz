@@ -43,17 +43,33 @@ class FormatTest {
         assertThatThrownBy(() -> Format.detect(null)).isInstanceOf(NullPointerException.class);
     }
 
+    @Test void testDetectOds() {
+        assertThat(Format.detect("file.ods")).isEqualTo(Format.ODS);
+        assertThat(Format.detect("FILE.ODS")).isEqualTo(Format.ODS);
+        assertThat(Format.detect("/path/to/file.ods")).isEqualTo(Format.ODS);
+    }
+
     @Test void testProperties() {
         assertThat(Format.XLSX.extension()).isEqualTo("xlsx");
         assertThat(Format.XLSX.isExcel()).isTrue();
         assertThat(Format.XLSX.isCsv()).isFalse();
+        assertThat(Format.XLSX.isOds()).isFalse();
+        assertThat(Format.XLSX.isSpreadsheet()).isTrue();
 
         assertThat(Format.XLS.extension()).isEqualTo("xls");
         assertThat(Format.XLS.isExcel()).isTrue();
         assertThat(Format.XLS.isCsv()).isFalse();
+        assertThat(Format.XLS.isSpreadsheet()).isTrue();
 
         assertThat(Format.CSV.extension()).isEqualTo("csv");
         assertThat(Format.CSV.isExcel()).isFalse();
         assertThat(Format.CSV.isCsv()).isTrue();
+        assertThat(Format.CSV.isSpreadsheet()).isFalse();
+
+        assertThat(Format.ODS.extension()).isEqualTo("ods");
+        assertThat(Format.ODS.isExcel()).isFalse();
+        assertThat(Format.ODS.isCsv()).isFalse();
+        assertThat(Format.ODS.isOds()).isTrue();
+        assertThat(Format.ODS.isSpreadsheet()).isTrue();
     }
 }

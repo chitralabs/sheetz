@@ -2,7 +2,7 @@
  * Sheetz - High-performance Excel/CSV processing library for Java.
  *
  * <p>Provides annotation-based mapping between spreadsheet rows and Java objects
- * with support for XLSX, XLS, and CSV formats.</p>
+ * with support for XLSX, XLS, CSV, and ODS formats.</p>
  */
 module io.github.chitralabs.sheetz.core {
     // Public API exports
@@ -11,6 +11,7 @@ module io.github.chitralabs.sheetz.core {
     exports io.github.chitralabs.sheetz.convert;
     exports io.github.chitralabs.sheetz.exception;
     exports io.github.chitralabs.sheetz.reader;
+    exports io.github.chitralabs.sheetz.style;
     exports io.github.chitralabs.sheetz.writer;
 
     // Internal packages (not exported)
@@ -22,4 +23,6 @@ module io.github.chitralabs.sheetz.core {
     requires com.opencsv;
     requires org.slf4j;
     requires java.xml;
+    requires java.desktop;
+    requires static odfdom.java;
 }
