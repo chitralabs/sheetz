@@ -5,6 +5,7 @@ import io.github.chitralabs.sheetz.convert.Converter;
 import io.github.chitralabs.sheetz.convert.Converters;
 import io.github.chitralabs.sheetz.exception.SheetzException;
 import io.github.chitralabs.sheetz.reader.*;
+import io.github.chitralabs.sheetz.style.CellStyleDef;
 import io.github.chitralabs.sheetz.writer.*;
 import java.io.*;
 import java.nio.file.*;
@@ -67,7 +68,9 @@ public final class Sheetz {
     public static <T> List<T> read(Path path, Class<T> type) {
         validateReadPath(path);
         Format fmt = Format.detect(path.toString());
-        return fmt.isCsv() ? new CsvReader<>(type, CONFIG.get()).read(path) : new ExcelReader<>(type, CONFIG.get()).read(path);
+        if (fmt.isCsv()) return new CsvReader<>(type, CONFIG.get()).read(path);
+        if (fmt.isOds()) return new OdsReader<>(type, CONFIG.get()).read(path);
+        return new ExcelReader<>(type, CONFIG.get()).read(path);
     }
 
     /**
@@ -82,7 +85,9 @@ public final class Sheetz {
      */
     public static <T> List<T> read(InputStream input, Class<T> type, Format format) {
         Objects.requireNonNull(input); Objects.requireNonNull(format);
-        return format.isCsv() ? new CsvReader<>(type, CONFIG.get()).read(input) : new ExcelReader<>(type, CONFIG.get()).read(input, format);
+        if (format.isCsv()) return new CsvReader<>(type, CONFIG.get()).read(input);
+        if (format.isOds()) return new OdsReader<>(type, CONFIG.get()).read(input);
+        return new ExcelReader<>(type, CONFIG.get()).read(input, format);
     }
 
     /**
@@ -103,7 +108,9 @@ public final class Sheetz {
     public static List<Map<String, Object>> readMaps(Path path) {
         validateReadPath(path);
         Format fmt = Format.detect(path.toString());
-        return fmt.isCsv() ? CsvReader.readMaps(path, CONFIG.get()) : ExcelReader.readMaps(path, CONFIG.get());
+        if (fmt.isCsv()) return CsvReader.readMaps(path, CONFIG.get());
+        if (fmt.isOds()) return OdsReader.readMaps(path, CONFIG.get());
+        return ExcelReader.readMaps(path, CONFIG.get());
     }
 
     /**
@@ -115,7 +122,9 @@ public final class Sheetz {
      */
     public static List<Map<String, Object>> readMaps(InputStream input, Format format) {
         Objects.requireNonNull(input); Objects.requireNonNull(format);
-        return format.isCsv() ? CsvReader.readMaps(input, CONFIG.get()) : ExcelReader.readMaps(input, CONFIG.get());
+        if (format.isCsv()) return CsvReader.readMaps(input, CONFIG.get());
+        if (format.isOds()) return OdsReader.readMaps(input, CONFIG.get());
+        return ExcelReader.readMaps(input, CONFIG.get());
     }
 
     /**
@@ -135,7 +144,9 @@ public final class Sheetz {
     public static List<String[]> readRaw(Path path) {
         validateReadPath(path);
         Format fmt = Format.detect(path.toString());
-        return fmt.isCsv() ? CsvReader.readRaw(path, CONFIG.get()) : ExcelReader.readRaw(path, CONFIG.get());
+        if (fmt.isCsv()) return CsvReader.readRaw(path, CONFIG.get());
+        if (fmt.isOds()) return OdsReader.readRaw(path, CONFIG.get());
+        return ExcelReader.readRaw(path, CONFIG.get());
     }
 
     /**
@@ -147,7 +158,9 @@ public final class Sheetz {
      */
     public static List<String[]> readRaw(InputStream input, Format format) {
         Objects.requireNonNull(input); Objects.requireNonNull(format);
-        return format.isCsv() ? CsvReader.readRaw(input, CONFIG.get()) : ExcelReader.readRaw(input, CONFIG.get());
+        if (format.isCsv()) return CsvReader.readRaw(input, CONFIG.get());
+        if (format.isOds()) return OdsReader.readRaw(input, CONFIG.get());
+        return ExcelReader.readRaw(input, CONFIG.get());
     }
 
     /**
@@ -224,6 +237,7 @@ public final class Sheetz {
         Format fmt = Format.detect(path.toString());
         Class<T> type = (Class<T>) data.get(0).getClass();
         if (fmt.isCsv()) new CsvWriter<>(type, CONFIG.get()).write(data, path);
+        else if (fmt.isOds()) new OdsWriter<>(type, CONFIG.get()).write(data, path);
         else new ExcelWriter<>(type, CONFIG.get()).write(data, path, fmt);
     }
 
@@ -241,6 +255,7 @@ public final class Sheetz {
         if (data == null || data.isEmpty()) throw new SheetzException("Data cannot be null or empty");
         Class<T> type = (Class<T>) data.get(0).getClass();
         if (format.isCsv()) new CsvWriter<>(type, CONFIG.get()).write(data, output);
+        else if (format.isOds()) new OdsWriter<>(type, CONFIG.get()).write(data, output);
         else new ExcelWriter<>(type, CONFIG.get()).write(data, output, format);
     }
 
@@ -309,6 +324,7 @@ public final class Sheetz {
         validateReadPath(path);
         Format fmt = Format.detect(path.toString());
         if (fmt.isCsv()) return new CsvReader<>(type, CONFIG.get()).validate(path);
+        if (fmt.isOds()) return new OdsReader<>(type, CONFIG.get()).validate(path);
         return new ExcelReader<>(type, CONFIG.get()).validate(path);
     }
 
@@ -366,6 +382,12 @@ public final class Sheetz {
             if (path != null) {
                 Format fmt = Format.detect(path.toString());
                 if (fmt.isCsv()) return new CsvReader<>(type, config).delimiter(delimiter).read(path);
+                if (fmt.isOds()) {
+                    OdsReader<T> reader = new OdsReader<>(type, config);
+                    if (sheetName != null) reader.sheet(sheetName); else reader.sheet(sheet);
+                    if (headerRow >= 0) reader.headerRow(headerRow);
+                    return reader.read(path);
+                }
                 ExcelReader<T> reader = new ExcelReader<>(type, config);
                 if (sheetName != null) reader.sheet(sheetName); else reader.sheet(sheet);
                 if (headerRow >= 0) reader.headerRow(headerRow);
@@ -373,6 +395,7 @@ public final class Sheetz {
             }
             if (inputStream != null && format != null) {
                 if (format.isCsv()) return new CsvReader<>(type, config).delimiter(delimiter).read(inputStream);
+                if (format.isOds()) return new OdsReader<>(type, config).read(inputStream);
                 return new ExcelReader<>(type, config).read(inputStream, format);
             }
             throw new SheetzException("No file or input stream specified");
@@ -389,6 +412,8 @@ public final class Sheetz {
         private List<T> data; private Path path; private OutputStream outputStream; private Format format;
         private String sheetName; private boolean autoSize = false; private boolean freezeHeader = false;
         private boolean streaming = false; private char delimiter = ',';
+        private boolean autoFilter = false; private CellStyleDef headerStyleDef;
+        private final List<int[]> mergeRegions = new ArrayList<>();
 
         WriterBuilder(Class<T> type, SheetzConfig config) { this.type = type; this.config = config; }
 
@@ -401,29 +426,49 @@ public final class Sheetz {
         public WriterBuilder<T> freezeHeader(boolean v) { this.freezeHeader = v; return this; }
         public WriterBuilder<T> streaming(boolean v) { this.streaming = v; return this; }
         public WriterBuilder<T> delimiter(char d) { this.delimiter = d; return this; }
+        public WriterBuilder<T> autoFilter(boolean v) { this.autoFilter = v; return this; }
+        public WriterBuilder<T> headerStyle(CellStyleDef headerStyleDef) { this.headerStyleDef = headerStyleDef; return this; }
+        public WriterBuilder<T> mergeRegion(int firstRow, int lastRow, int firstCol, int lastCol) {
+            mergeRegions.add(new int[] { firstRow, lastRow, firstCol, lastCol }); return this;
+        }
 
         public void write() {
             if (data == null || data.isEmpty()) throw new SheetzException("No data to write");
             if (path != null) {
                 Format fmt = Format.detect(path.toString());
                 if (fmt.isCsv()) new CsvWriter<>(type, config).delimiter(delimiter).write(data, path);
-                else {
-                    ExcelWriter<T> writer = new ExcelWriter<>(type, config).autoSize(autoSize).freezeHeader(freezeHeader).streaming(streaming);
-                    if (sheetName != null) writer.sheetName(sheetName);
+                else if (fmt.isOds()) {
+                    OdsWriter<T> w = new OdsWriter<>(type, config);
+                    if (sheetName != null) w.sheetName(sheetName);
+                    w.write(data, path);
+                } else {
+                    ExcelWriter<T> writer = configureExcelWriter();
                     writer.write(data, path, fmt);
                 }
                 return;
             }
             if (outputStream != null && format != null) {
                 if (format.isCsv()) new CsvWriter<>(type, config).delimiter(delimiter).write(data, outputStream);
-                else {
-                    ExcelWriter<T> writer = new ExcelWriter<>(type, config).autoSize(autoSize).freezeHeader(freezeHeader).streaming(streaming);
-                    if (sheetName != null) writer.sheetName(sheetName);
+                else if (format.isOds()) {
+                    OdsWriter<T> w = new OdsWriter<>(type, config);
+                    if (sheetName != null) w.sheetName(sheetName);
+                    w.write(data, outputStream);
+                } else {
+                    ExcelWriter<T> writer = configureExcelWriter();
                     writer.write(data, outputStream, format);
                 }
                 return;
             }
             throw new SheetzException("No output file or stream specified");
+        }
+
+        private ExcelWriter<T> configureExcelWriter() {
+            ExcelWriter<T> writer = new ExcelWriter<>(type, config)
+                .autoSize(autoSize).freezeHeader(freezeHeader).streaming(streaming).autoFilter(autoFilter);
+            if (sheetName != null) writer.sheetName(sheetName);
+            if (headerStyleDef != null) writer.headerStyle(headerStyleDef);
+            for (int[] mr : mergeRegions) writer.mergeRegion(mr[0], mr[1], mr[2], mr[3]);
+            return writer;
         }
     }
 }

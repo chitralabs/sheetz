@@ -1,6 +1,7 @@
 package io.github.chitralabs.sheetz.convert;
 
 import io.github.chitralabs.sheetz.exception.SheetzException;
+import io.github.chitralabs.sheetz.style.HyperlinkValue;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.*;
@@ -65,6 +66,7 @@ public final class Converters {
 
         // Other types
         register(UUID.class, new UUIDConv());
+        register(HyperlinkValue.class, new HyperlinkValueConv());
     }
 
     public static <T> void register(Class<T> type, Converter<T> conv) {
@@ -379,5 +381,18 @@ public final class Converters {
         }
                 @Override
         public Object toCell(E v) { return v != null ? v.name() : null; }
+    }
+
+    /** Converter for HyperlinkValue (display text + URL). */
+    static final class HyperlinkValueConv implements Converter<HyperlinkValue> {
+        @Override
+        public HyperlinkValue fromCell(Object v, ConvertContext ctx) {
+            if (isBlank(v)) return null;
+            if (v instanceof HyperlinkValue) return (HyperlinkValue) v;
+            String s = v.toString();
+            return new HyperlinkValue(s, s);
+        }
+        @Override
+        public Object toCell(HyperlinkValue v) { return v != null ? v.displayText() : null; }
     }
 }

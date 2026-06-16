@@ -99,6 +99,9 @@ public final class StreamingReader<T> implements Iterable<T>, AutoCloseable {
             return new XlsxStreamingIterator();
         } else if (format == Format.CSV) {
             return new CsvStreamingIterator();
+        } else if (format == Format.ODS) {
+            log.debug("ODS format detected, falling back to in-memory reading");
+            return new OdsReader<>(type, config).read(path).iterator();
         } else {
             // XLS format - fallback to loading (no streaming API available)
             log.debug("XLS format detected, falling back to in-memory reading");

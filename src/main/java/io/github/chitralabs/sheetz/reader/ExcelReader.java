@@ -4,6 +4,7 @@ import io.github.chitralabs.sheetz.*;
 import io.github.chitralabs.sheetz.cache.*;
 import io.github.chitralabs.sheetz.convert.*;
 import io.github.chitralabs.sheetz.exception.*;
+import io.github.chitralabs.sheetz.style.HyperlinkValue;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -128,11 +129,12 @@ public final class ExcelReader<T> {
         List<String> headers = readHeaders(headerRowObj);
         ColumnResolver resolver = new ColumnResolver(headers);
         List<RowMapper.ResolvedField> fields = RowMapper.resolveFields(mapping, resolver);
+        MergedRegionResolver mergedResolver = sheet.getNumMergedRegions() > 0 ? new MergedRegionResolver(sheet) : null;
         List<T> results = new ArrayList<>();
         for (int rowNum = hdrRow + 1; rowNum <= sheet.getLastRowNum(); rowNum++) {
             Row row = sheet.getRow(rowNum);
             if (row == null || isRowEmpty(row)) { if (config.skipEmptyRows()) continue; }
-            T obj = mapRow(row, fields, rowNum + 1, headers);
+            T obj = mapRow(row, fields, rowNum + 1, headers, mergedResolver);
             if (obj != null) results.add(obj);
         }
         return results;
@@ -148,9 +150,38 @@ public final class ExcelReader<T> {
     }
 
     private T mapRow(Row row, List<RowMapper.ResolvedField> fields, int rowNum, List<String> headers) {
+        return mapRow(row, fields, rowNum, headers, null);
+    }
+
+    private T mapRow(Row row, List<RowMapper.ResolvedField> fields, int rowNum, List<String> headers,
+                     MergedRegionResolver mergedResolver) {
         return RowMapper.mapObjectRow(mapping, fields,
-            colIdx -> getCellValue(row != null ? row.getCell(colIdx) : null),
+            colIdx -> {
+                if (row == null) return null;
+                Cell cell = row.getCell(colIdx);
+                // Check if this cell is part of a merged region
+                if (mergedResolver != null && mergedResolver.isMergedNonMaster(rowNum - 1, colIdx)) {
+                    return mergedResolver.resolve(rowNum - 1, colIdx);
+                }
+                // Check for HyperlinkValue type in the target field
+                RowMapper.ResolvedField rf = findResolvedField(fields, colIdx);
+                if (rf != null && rf.mapping.type() == HyperlinkValue.class && cell != null) {
+                    Hyperlink link = cell.getHyperlink();
+                    if (link != null) {
+                        String displayText = getCellAsString(cell);
+                        return new HyperlinkValue(displayText != null ? displayText : "", link.getAddress());
+                    }
+                }
+                return getCellValue(cell);
+            },
             rowNum, headers, config);
+    }
+
+    private static RowMapper.ResolvedField findResolvedField(List<RowMapper.ResolvedField> fields, int colIdx) {
+        for (RowMapper.ResolvedField rf : fields) {
+            if (rf.colIdx == colIdx) return rf;
+        }
+        return null;
     }
 
     private boolean isRowEmpty(Row row) {

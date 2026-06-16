@@ -7,7 +7,7 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/chitralabs/sheetz?style=social)](https://github.com/chitralabs/sheetz/stargazers)
 
-> **Read and write Excel & CSV files in Java with a single line of code.**
+> **Read and write Excel, CSV, and ODS files in Java with a single line of code.**
 
 ```java
 // The entire API, right here:
@@ -97,9 +97,10 @@ Sheetz.stream("huge.xlsx", Product.class)
 - 🔄 **19 Auto Converters** — LocalDate, LocalDateTime, BigDecimal, UUID, Enum, Boolean (`yes/true/1/on`), and more
 - 🧵 **Thread-Safe** — safe for concurrent use without synchronization
 - ✅ **Row-Level Validation** — per-row errors with column name, value, and root cause
+- 🎨 **`@Style` Annotation** — fonts, colors, borders, alignment, hyperlinks, merged cells, auto-filters
 - 📝 **`@Column` Annotation** — map to any header name, index, required, default, date format, custom converter
 - 📑 **Multi-Sheet Workbook** — write different model types to different sheets in one call
-- 📁 **Multi-Format** — XLSX, XLS (legacy 97-2003), and CSV from one unified API
+- 📁 **Multi-Format** — XLSX, XLS (legacy 97-2003), CSV, and ODS (LibreOffice) from one unified API
 - ⚙️ **Builder API** — fine-grained control via `Sheetz.reader()` and `Sheetz.writer()` builders
 - 🔌 **Extensible** — implement `Converter<T>` interface for custom types
 
@@ -222,11 +223,88 @@ Sheetz.writer(Product.class)
 
 ---
 
+## 🎨 Cell Formatting with `@Style`
+
+```java
+public class StyledProduct {
+    @Column("Product Name")
+    @Style(bold = true, fontColor = "#0000FF")
+    public String name;
+
+    @Style(backgroundColor = "#FFFF00", horizontalAlignment = "CENTER")
+    public Double price;
+
+    @Style(borderStyle = "THIN", wrapText = true, dataFormat = "#,##0.00")
+    public BigDecimal amount;
+
+    @Style(hyperlink = true)
+    public String url;
+}
+```
+
+### Programmatic Styles
+
+```java
+CellStyleDef headerStyle = CellStyleBuilder.create()
+    .bold(true)
+    .backgroundColor("#003366")
+    .fontColor("#FFFFFF")
+    .horizontalAlignment("CENTER")
+    .build();
+
+Sheetz.writer(Product.class)
+    .data(products)
+    .file("styled.xlsx")
+    .headerStyle(headerStyle)
+    .autoFilter(true)
+    .write();
+```
+
+### Hyperlinks
+
+```java
+public class Company {
+    public String name;
+    public HyperlinkValue website;  // Automatically creates clickable hyperlink
+}
+
+company.website = new HyperlinkValue("Visit Acme", "https://acme.example.com");
+```
+
+---
+
+## 📂 ODS (LibreOffice Calc) Support
+
+Sheetz supports `.ods` files via the ODF Toolkit (optional dependency):
+
+```xml
+<!-- Add to your pom.xml only if you need ODS support -->
+<dependency>
+    <groupId>org.odftoolkit</groupId>
+    <artifactId>odfdom-java</artifactId>
+    <version>0.12.0</version>
+</dependency>
+```
+
+```java
+// Read and write ODS files exactly like Excel
+List<Product> products = Sheetz.read("products.ods", Product.class);
+Sheetz.write(products, "output.ods");
+
+// Multi-sheet ODS workbooks
+Sheetz.workbook()
+    .sheet("Products", products)
+    .sheet("Orders", orders)
+    .write("report.ods");
+```
+
+---
+
 ## 🗺️ Roadmap
 
 Contributions welcome for any of these! See [CONTRIBUTING.md](CONTRIBUTING.md).
 
-- [ ] ODS (LibreOffice Calc) format support — [#help-wanted]
+- [x] ODS (LibreOffice Calc) format support
 - [ ] Async/reactive streaming API (`Sheetz.streamAsync()`)
 - [ ] Google Sheets native reader via API
 - [ ] Excel formula write support
