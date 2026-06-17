@@ -6,6 +6,7 @@
 [![codecov](https://codecov.io/gh/chitralabs/sheetz/branch/main/graph/badge.svg)](https://codecov.io/gh/chitralabs/sheetz)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/chitralabs/sheetz?style=social)](https://github.com/chitralabs/sheetz/stargazers)
+[![Docs](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://chitralabs.github.io/sheetz/)
 
 > **Read and write Excel, CSV, and ODS files in Java with a single line of code.**
 
@@ -34,7 +35,7 @@ Apache POI requires **45+ lines** to do what Sheetz does in **1**. Here's the pr
 | **Auto type conversion** | ✅ 19 types | ❌ | ⚠️ basic | ❌ |
 | **Multi-format (xlsx/xls/csv/ods)** | ✅ | ✅ | ⚠️ xlsx only | ⚠️ xlsx only |
 
-📊 [Full JMH benchmark results & methodology →](https://github.com/chitralabs/sheetz-benchmarks)
+📊 [Full JMH benchmark results & methodology →](https://chitralabs.github.io/sheetz/benchmarks) | 🔄 [Migrate from Apache POI →](https://chitralabs.github.io/sheetz/migration-from-poi)
 
 ---
 
@@ -338,11 +339,18 @@ Looking for a good first issue? [Browse issues labelled `good first issue`](http
 
 | Resource | Description |
 |----------|-------------|
-| [sheetz-examples](https://github.com/chitralabs/sheetz-examples) | 8 runnable demos covering every feature |
+| [Documentation](https://chitralabs.github.io/sheetz/) | API docs, migration guide, benchmarks, FAQ |
+| [sheetz-examples](https://github.com/chitralabs/sheetz-examples) | 9 runnable demos covering every feature |
 | [sheetz-benchmarks](https://github.com/chitralabs/sheetz-benchmarks) | JMH benchmarks vs Apache POI, EasyExcel, FastExcel, Poiji |
 | [Maven Central](https://central.sonatype.com/artifact/io.github.chitralabs.sheetz/sheetz-core) | Latest release |
 | [GitHub Discussions](https://github.com/chitralabs/sheetz/discussions) | Q&A and community |
 | [Issues](https://github.com/chitralabs/sheetz/issues) | Bug reports and feature requests |
+
+---
+
+## 📈 Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=chitralabs/sheetz&type=Date)](https://star-history.com/#chitralabs/sheetz&Date)
 
 ---
 
