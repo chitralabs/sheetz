@@ -7,6 +7,32 @@
   {% seo %}
   <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
   <link rel="canonical" href="{{ page.url | absolute_url }}">
+  <!-- JSON-LD Structured Data for rich Google snippets -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    "name": "Sheetz",
+    "description": "Read and write Excel (XLSX, XLS), CSV, and ODS files in Java with one line of code. A high-performance alternative to Apache POI.",
+    "url": "https://github.com/chitralabs/sheetz",
+    "codeRepository": "https://github.com/chitralabs/sheetz",
+    "programmingLanguage": "Java",
+    "runtimePlatform": "Java 11+",
+    "license": "https://www.apache.org/licenses/LICENSE-2.0",
+    "author": {
+      "@type": "Organization",
+      "name": "chitralabs",
+      "url": "https://github.com/chitralabs"
+    },
+    "operatingSystem": "Cross-platform",
+    "applicationCategory": "DeveloperApplication",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
   <!--[if lt IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
   <![endif]-->
