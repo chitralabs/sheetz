@@ -5,7 +5,7 @@ contact_links:
     about: For usage questions, please use Discussions — Issues are for bugs and feature requests.
   - name: 📖 Check the Examples First
     url: https://github.com/chitralabs/sheetz-examples
-    about: See if your use case is already covered by the 8 runnable examples.
+    about: See if your use case is already covered by the 9 runnable examples.
   - name: 📊 Benchmark Questions
     url: https://github.com/chitralabs/sheetz-benchmarks
     about: For performance questions, see the JMH benchmark comparisons.
