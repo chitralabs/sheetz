@@ -10,7 +10,6 @@ This document outlines planned features and improvements. All items marked with
 
 | Feature | Status | Difficulty | Notes |
 |---------|--------|------------|-------|
-| ODS (LibreOffice) format support | 🙏 Open | Medium | Apache POI supports HSSF/XSSF; needs ODS equivalent |
 | Spring Boot Auto-Configuration Starter | 🙏 Open | Medium | New repo: `sheetz-spring-boot-starter` |
 | Quarkus Extension | 🙏 Open | Medium | New repo: `sheetz-quarkus-extension` |
 | Async streaming API (`Sheetz.streamAsync()`) | 🙏 Open | Hard | Returns `CompletableFuture<Stream<T>>` |
@@ -56,3 +55,9 @@ This document outlines planned features and improvements. All items marked with
 | Multi-sheet workbook write | v1.0.0 | — |
 | Builder API (reader/writer) | v1.0.0 | — |
 | Thread-safety | v1.0.0 | — |
+| ODS (LibreOffice) format support | v1.1.0 | #28 |
+| Cell Formatting API (`@Style`) | v1.1.0 | #28 |
+| Hyperlink support (`HyperlinkValue`) | v1.1.0 | #28 |
+| Merged cell read support | v1.1.0 | #28 |
+| Auto-filter and merge region writes | v1.1.0 | #28 |
+| Custom header styles (`CellStyleBuilder`) | v1.1.0 | #28 |
