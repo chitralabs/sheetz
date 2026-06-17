@@ -1,5 +1,36 @@
 title: Sheetz
-description: Read and write Excel, CSV, and ODS files in Java with a single line of code.
+tagline: "Java Excel, CSV & ODS Library"
+description: >-
+  Read and write Excel (XLSX, XLS), CSV, and ODS files in Java with one line of code.
+  Annotation-based mapping, SAX streaming for million-row files, built-in validation,
+  19 automatic type converters. A modern, high-performance alternative to Apache POI.
+url: "https://chitralabs.github.io"
+baseurl: "/sheetz"
 remote_theme: pages-themes/cayman@v0.2.0
+
 plugins:
   - jekyll-remote-theme
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+author: chitralabs
+twitter:
+  card: summary
+social:
+  name: Chitralabs
+  links:
+    - https://github.com/chitralabs
+
+# google_analytics: G-XXXXXXXXXX
+
+header_pages:
+  - index.md
+  - migration-from-poi.md
+  - benchmarks.md
+  - faq.md
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
