@@ -1,0 +1,48 @@
+name: Feature Request
+description: Suggest a new feature or improvement
+title: "[FEATURE] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a feature! Please describe what you'd like.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: What problem does this feature solve? Who would benefit?
+      placeholder: "I'm always frustrated when..."
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Describe what you'd like. Include an API sketch if possible.
+      render: java
+      placeholder: |
+        // Example of how the feature might look
+        List<Product> products = Sheetz.read("data.ods", Product.class);
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Have you tried any workarounds? What other libraries/tools handle this?
+  - type: dropdown
+    id: contribute
+    attributes:
+      label: Would You Contribute This?
+      options:
+        - "Yes, I'd like to implement this"
+        - "I can help test it"
+        - "I just need the feature"
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      description: Links, screenshots, or other context that helps explain the request.

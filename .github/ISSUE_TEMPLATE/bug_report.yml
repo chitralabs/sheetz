@@ -1,0 +1,83 @@
+name: Bug Report
+description: Something isn't working correctly
+title: "[BUG] "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please fill out the sections below.
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear, concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Minimal code that reproduces the bug.
+      render: java
+      placeholder: |
+        List<Product> products = Sheetz.read("data.xlsx", Product.class);
+        // What happens vs what you expected?
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What you expected to happen.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened. Include the full stack trace if there is one.
+      render: shell
+    validations:
+      required: true
+  - type: input
+    id: sheetz-version
+    attributes:
+      label: Sheetz Version
+      placeholder: "1.1.0"
+    validations:
+      required: true
+  - type: input
+    id: java-version
+    attributes:
+      label: Java Version
+      placeholder: "OpenJDK 17.0.5"
+    validations:
+      required: true
+  - type: dropdown
+    id: file-type
+    attributes:
+      label: File Type
+      options:
+        - .xlsx
+        - .xls
+        - .csv
+        - .ods
+        - N/A
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating System
+      placeholder: "macOS 14 / Ubuntu 22.04 / Windows 11"
+  - type: textarea
+    id: sample-file
+    attributes:
+      label: Sample File
+      description: If possible, attach or describe the Excel/CSV/ODS file structure that triggers the bug.
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      description: Any other context about the problem.
